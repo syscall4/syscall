@@ -19,11 +19,17 @@
 <body>
     <header class="header">
         <div class="header-container">
-            <a href="/" class="logo">syscall<span class="logo-accent">();</span></a>
+            <a href="/" class="logo">
+                syscall<span class="logo-accent">();</span>
+            </a>
+
             <nav class="nav">
                 <button class="menu-toggle" aria-label="Menú" aria-expanded="false">
-                    <span></span><span></span><span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </button>
+
                 <ul class="nav-list">
                     <li><a href="https://youtube.com/@syscall.sc4" target="_blank" rel="noopener noreferrer"
                             class="nav-link">/youtube</a></li>
@@ -40,54 +46,74 @@
         <section class="hero">
             <div class="hero-container">
                 <span class="hero-tag">informática clara y directa</span>
-                <h1 class="hero-title">syscall<span class="hero-accent">();</span></h1>
-                <p class="hero-description">Seguridad, actualidad, hardware y conceptos. Todo sobre informática,
-                    explicado de forma sencilla y sin rodeos.</p>
+                <h1 class="hero-title">
+                    syscall<span class="hero-accent">();</span>
+                </h1>
+                <p class="hero-description">
+                    Seguridad, actualidad, hardware y conceptos. Todo sobre informática,
+                    explicado de forma sencilla y sin rodeos.
+                </p>
             </div>
         </section>
 
+        <!-- Barra de búsqueda -->
         <section class="search-section">
             <div class="search-container">
                 <div class="search-wrapper" id="search-wrapper">
-                    <input type="text" id="search-input" class="search-input"
-                        placeholder="Buscar artículos, vídeos, tutoriales..." autocomplete="off">
-                    <button class="search-button" id="search-button"><span class="search-icon">🔍</span></button>
+                    <input 
+                        type="text" 
+                        id="search-input" 
+                        class="search-input" 
+                        placeholder="Buscar artículos, vídeos, tutoriales..."
+                        autocomplete="off"
+                    >
+                    <button class="search-button" id="search-button">
+                        <span class="search-icon">🔍</span>
+                    </button>
                     <div class="search-results" id="search-results"></div>
                 </div>
             </div>
         </section>
 
+        <!-- Syscall de la semana -->
         <div class="weekly-syscall"></div>
 
         <div class="container">
             <div class="content-wrapper">
+                <!-- Sección de artículos -->
                 <section class="articles">
                     <div class="section-header">
-                        <h2 class="section-title">últimos artículos</h2>
+                        <h2 class="section-title">últimos vídeos y artículos</h2>
                     </div>
                     <div class="articles-grid" id="articles-grid-container">
                         <div class="loader" role="status" aria-label="Cargando artículos"></div>
                     </div>
                 </section>
 
+                <!-- Sección de último video -->
                 <section class="latest-video">
                     <div class="section-header">
                         <h2 class="section-title">último video</h2>
+                        <a href="https://youtube.com/@syscall.sc4" target="_blank" class="section-link">ver canal →</a>
                     </div>
+
                     <div class="video-embed-wrapper">
                         <div class="embed-container">
                             <iframe
                                 src="https://www.youtube.com/embed?list=UUud7gxsaKCpU144Vvbk3zcg&index=1&rel=0&modestbranding=1"
                                 title="Último video de syscall" frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen loading="lazy"></iframe>
+                                allowfullscreen loading="lazy">
+                            </iframe>
                         </div>
                         <div class="video-info-bar">
                             <div class="video-title">
-                                <h3>Asi es el nuevo Macbook Neo</h3>
+                                <h3>Último video de syscall</h3>
+                                <p><span>Actualizado automáticamente</span></p>
                             </div>
-                            <a href="https://youtube.com/@syscall.sc4" target="_blank" class="video-button small">Ver en
-                                YouTube →</a>
+                            <a href="https://youtube.com/@syscall.sc4" target="_blank" class="video-button small">
+                                Ver en YouTube →
+                            </a>
                         </div>
                     </div>
                 </section>
@@ -101,6 +127,7 @@
                 <div class="footer-logo">syscall<span class="logo-accent">();</span></div>
                 <span class="footer-text">informática clara y directa</span>
             </div>
+
             <div class="footer-links">
                 <a href="https://youtube.com/@syscall.sc4" target="_blank" rel="noopener noreferrer"
                     class="footer-link">youtube</a>
@@ -110,78 +137,19 @@
                     class="footer-link">tiktok</a>
             </div>
         </div>
+
         <div class="footer-bottom">
-            <p><span>© 2026 syscall</span><span class="separator">·</span><span>informática clara y directa</span><span
-                    class="separator">·</span><span class="footer-exit">exit(0);</span></p>
+            <p>
+                <span>© 2026 syscall</span>
+                <span class="separator">·</span>
+                <span>informática clara y directa</span>
+                <span class="separator">·</span>
+                <span class="footer-exit">exit(0);</span>
+            </p>
         </div>
     </footer>
 
-    <!-- Script de carga de configuración -->
-    <script>
-        // Variable para controlar la inicialización
-        window.appInitialized = false;
-
-        // Función para inicializar la app después de tener la configuración
-        function initializeApp() {
-            if (window.appInitialized) return;
-            window.appInitialized = true;
-
-            console.log('🚀 Inicializando app con configuración:', {
-                url: window.SUPABASE_CONFIG?.url,
-                keyLength: window.SUPABASE_CONFIG?.anonKey?.length
-            });
-
-            // Cargar el script principal
-            const script = document.createElement('script');
-            script.type = 'module';
-            script.src = 'js/supabase-client.js';
-            document.body.appendChild(script);
-        }
-
-        // Cargar configuración
-        async function loadConfig() {
-            try {
-                // Intentar cargar desde Netlify Function
-                const response = await fetch('/.netlify/functions/config');
-                if (!response.ok) throw new Error('Network response was not ok');
-
-                const config = await response.json();
-
-                window.SUPABASE_CONFIG = {
-                    url: config.url,
-                    anonKey: config.anonKey
-                };
-
-                console.log('✅ Configuración cargada desde Netlify Function');
-                console.log('Key length:', window.SUPABASE_CONFIG.anonKey?.length);
-
-                // Inicializar la app
-                initializeApp();
-
-            } catch (error) {
-                console.log('⚠️ No se pudo cargar desde Function, usando configuración local');
-
-                // Fallback a configuración local
-                window.SUPABASE_CONFIG = {
-                    url: 'https://swsrywvjskhshlbtbzrx.supabase.co',
-                    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN3c3J5d3Zqc2toc2hsYnRienJ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwMDcxMDksImV4cCI6MjA4ODU4MzEwOX0.u9JCI1eyR4yNdTGb9o17vHTDGZJDrO7W62KlkMATd1M'
-                };
-
-                console.log('✅ Configuración local cargada');
-                console.log('Key length:', window.SUPABASE_CONFIG.anonKey.length);
-
-                // Inicializar la app
-                initializeApp();
-            }
-        }
-
-        // Iniciar carga cuando el DOM esté listo
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', loadConfig);
-        } else {
-            loadConfig();
-        }
-    </script>
+    <script src="/js/supabase-client.js" type="module"></script>
 </body>
 
 </html>

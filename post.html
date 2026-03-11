@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>syscall - Cargando artículo...</title>
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="shortcut icon" href="/src/logo.jpg" type="image/x-icon">
-    <link rel="shortcut icon" href="src/logo.jpg" type="image/x-icon">
     <style>
         /* Estilos adicionales para la página de artículo */
         .article-page {
@@ -32,7 +30,7 @@
             justify-content: center;
             gap: 2rem;
             color: var(--text-secondary);
-            margin: 2rem 0 2rem 0;
+            margin-bottom: 2rem;
             flex-wrap: wrap;
         }
 
@@ -103,12 +101,9 @@
             font-style: italic;
         }
 
-        /* ===== FOOTER DEL ARTÍCULO ===== */
         .article-footer {
-            display: flex;
-            flex-direction: column;
-            margin-top: 4rem;
-            padding-top: 3rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
             border-top: 1px solid var(--border-color);
         }
 
@@ -116,18 +111,16 @@
             display: flex;
             gap: 0.5rem;
             flex-wrap: wrap;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
         }
 
         .article-tag {
-            background-color: transparent;
+            background-color: var(--bg-secondary);
             color: var(--text-secondary);
             padding: 0.25rem 0.75rem;
-            border-radius: 4px;
-            font-size: 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
             border: 1px solid var(--border-color);
-            transition: all 0.2s ease;
-            text-transform: lowercase;
         }
 
         .article-tag:hover {
@@ -135,91 +128,27 @@
             color: var(--accent-primary);
         }
 
-        .author-section {
-            margin-bottom: 3rem;
-            padding: 2rem;
-            background-color: var(--bg-secondary);
-            border-radius: 8px;
-        }
-
-        .author-section h3 {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            font-weight: 400;
-        }
-
-        .author-container {
-            display: flex;
-            gap: 1.5rem;
-            align-items: flex-start;
-        }
-
-        .author-avatar {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--accent-primary);
-        }
-
-        .author-info {
-            flex: 1;
-        }
-
-        .author-name {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.25rem;
-        }
-
-        .author-bio {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 0.75rem;
-        }
-
-        .author-instagram {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: color 0.2s ease;
-        }
-
-        .author-instagram:hover {
-            color: var(--accent-primary);
-        }
-
         .article-navigation {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 0;
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
+            margin-top: 2rem;
         }
 
-        .nav-prev,
-        .nav-next {
-            color: var(--text-primary);
+        .nav-prev, .nav-next {
+            color: var(--accent-primary);
             text-decoration: none;
-            font-size: 0.95rem;
-            transition: color 0.2s ease;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            transition: gap 0.2s ease;
         }
 
-        .nav-prev:hover,
+        .nav-prev:hover {
+            gap: 0.25rem;
+        }
+
         .nav-next:hover {
-            color: var(--accent-primary);
+            gap: 0.75rem;
         }
 
         .error-container {
@@ -231,6 +160,11 @@
             font-size: 2rem;
             color: #ef4444;
             margin-bottom: 1rem;
+        }
+
+        .error-container p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
         }
 
         .video-container {
@@ -249,48 +183,22 @@
             width: 100%;
             height: 100%;
         }
-
-        @media (max-width: 768px) {
-            .article-page {
-                padding: 1rem;
-            }
-            .article-header h1 {
-                font-size: 2rem;
-            }
-            .article-meta {
-                gap: 1rem;
-                font-size: 0.9rem;
-            }
-            .author-container {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-        }
     </style>
 </head>
 
 <body>
-    <header class="header">
-        <div class="header-container">
-            <a href="/" class="logo">
-                syscall<span class="logo-accent">();</span>
-            </a>
-
-            <nav class="nav">
-                <button class="menu-toggle" aria-label="Menú" aria-expanded="false">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-
-                <ul class="nav-list">
-                    <li><a href="https://youtube.com/@syscall.sc4" target="_blank" rel="noopener noreferrer"
-                            class="nav-link">/youtube</a></li>
-                    <li><a href="https://instagram.com/_syscall_" target="_blank" rel="noopener noreferrer"
-                            class="nav-link">/instagram</a></li>
-                    <li><a href="https://tiktok.com/@syscall" target="_blank" rel="noopener noreferrer"
-                            class="nav-link">/tiktok</a></li>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <a href="/">syscall<span>.</span></a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/">/inicio</a></li>
+                    <li><a href="/noticias">/noticias</a></li>
+                    <li><a href="/blog">/blog</a></li>
+                    <li><a href="/tutoriales">/tutoriales</a></li>
+                    <li><a href="/about">/about</a></li>
                 </ul>
             </nav>
         </div>
@@ -300,229 +208,124 @@
         <div class="loader" style="margin: 4rem auto;"></div>
     </main>
 
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-info">
-                <div class="footer-logo">syscall<span class="logo-accent">();</span></div>
-                <span class="footer-text">informática clara y directa</span>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>syscall</h4>
+                <ul>
+                    <li><a href="#">Sobre nosotros</a></li>
+                    <li><a href="#">Contacto</a></li>
+                    <li><a href="#">Privacidad</a></li>
+                    <li><a href="#">Términos</a></li>
+                </ul>
             </div>
-
-            <div class="footer-links">
-                <a href="https://youtube.com/@syscall.sc4" target="_blank" rel="noopener noreferrer"
-                    class="footer-link">youtube</a>
-                <a href="https://instagram.com/_syscall_" target="_blank" rel="noopener noreferrer"
-                    class="footer-link">instagram</a>
-                <a href="https://tiktok.com/@syscall" target="_blank" rel="noopener noreferrer"
-                    class="footer-link">tiktok</a>
+            <div class="footer-section">
+                <h4>explorar</h4>
+                <ul>
+                    <li><a href="#">Archivo</a></li>
+                    <li><a href="#">Autores</a></li>
+                    <li><a href="#">Contribuir</a></li>
+                    <li><a href="#">RSS</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>social</h4>
+                <div class="social-links">
+                    <a href="#">GitHub</a>
+                    <a href="#">Twitter</a>
+                    <a href="#">LinkedIn</a>
+                    <a href="#">YouTube</a>
+                </div>
             </div>
         </div>
-
-        <div class="footer-bottom">
-            <p>
-                <span>© 2026 syscall</span>
-                <span class="separator">·</span>
-                <span>informática clara y directa</span>
-                <span class="separator">·</span>
-                <span class="footer-exit">exit(0);</span>
-            </p>
+        <div class="copyright">
+            <p>© 2024 syscall. Todos los derechos reservados.</p>
+            <p style="margin-top: 0.5rem; font-family: monospace;">_exit(0);</p>
         </div>
     </footer>
 
-    <!-- CONFIGURACIÓN DIRECTA CON CLAVE CORRECTA -->
-    <script>
-        window.SUPABASE_CONFIG = {
-            url: 'https://swsrywvjskhshlbtbzrx.supabase.co',
-            anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN3c3J5d3Zqc2toc2hsYnRienJ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwMDcxMDksImV4cCI6MjA4ODU4MzEwOX0.u9JCI1eyR4yNdTGb9o17vHTDGZJDrO7W62KlkMATd1M'
-        };
-        console.log('✅ Configuración cargada en post.html:');
-        console.log('URL:', window.SUPABASE_CONFIG.url);
-        console.log('KEY length:', window.SUPABASE_CONFIG.anonKey.length);
-    </script>
-
-    <!-- Script único para post.html -->
     <script type="module">
-        // ===== IMPORTAR SUPABASE =====
         import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
-        
-        // Verificar configuración
-        if (!window.SUPABASE_CONFIG || !window.SUPABASE_CONFIG.url || !window.SUPABASE_CONFIG.anonKey) {
-            console.error('❌ Error: Configuración de Supabase incompleta');
-            document.getElementById('article-container').innerHTML = `
-                <div class="error-container">
-                    <h2>❌ Error de configuración</h2>
-                    <p>No se pudo conectar con la base de datos.</p>
-                    <a href="/" class="nav-prev" style="justify-content: center;">← Volver al inicio</a>
-                </div>
-            `;
-            throw new Error('Configuración de Supabase no encontrada');
-        }
 
-        // Inicializar cliente de Supabase
-        const supabaseUrl = window.SUPABASE_CONFIG.url;
-        const supabaseKey = window.SUPABASE_CONFIG.anonKey;
-        const supabase = createClient(supabaseUrl, supabaseKey);
-        console.log('✅ Cliente de Supabase inicializado');
+        const supabaseUrl = 'https://swsrywvjskhshlbtbzrx.supabase.co'
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN3c3J5d3Zqc2toc2hsYnRienJ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwMDcxMDksImV4cCI6MjA4ODU4MzEwOX0.u9JCI1eyR4yNdTGb9o17vHTDGZJDrO7W62KlkMATd1M'
+        const supabase = createClient(supabaseUrl, supabaseKey)
 
-        // ===== FUNCIONES =====
-        function initMobileMenu() {
-            const menuToggle = document.querySelector('.menu-toggle');
-            const navList = document.querySelector('.nav-list');
-
-            if (menuToggle && navList) {
-                menuToggle.addEventListener('click', () => {
-                    const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-                    menuToggle.setAttribute('aria-expanded', !isExpanded);
-                    menuToggle.classList.toggle('active');
-                    navList.classList.toggle('active');
-                    document.body.style.overflow = navList.classList.contains('active') ? 'hidden' : '';
-                });
-
-                navList.querySelectorAll('.nav-link').forEach(link => {
-                    link.addEventListener('click', () => {
-                        menuToggle.setAttribute('aria-expanded', 'false');
-                        menuToggle.classList.remove('active');
-                        navList.classList.remove('active');
-                        document.body.style.overflow = '';
-                    });
-                });
-
-                document.addEventListener('click', (e) => {
-                    if (!menuToggle.contains(e.target) && !navList.contains(e.target) && navList.classList.contains('active')) {
-                        menuToggle.setAttribute('aria-expanded', 'false');
-                        menuToggle.classList.remove('active');
-                        navList.classList.remove('active');
-                        document.body.style.overflow = '';
-                    }
-                });
-            }
-        }
-
+        // Obtener el slug de la URL - AHORA SOLO USA QUERY PARAMETERS
         function getSlugFromUrl() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('slug');
-        }
-
-        async function getArticleAuthor(articleId) {
-            try {
-                const { data: articleAuthor, error: relationError } = await supabase
-                    .from('article_authors')
-                    .select('author_id')
-                    .eq('article_id', articleId)
-                    .maybeSingle();
-
-                if (relationError || !articleAuthor) return null;
-
-                const { data: author, error: authorError } = await supabase
-                    .from('authors')
-                    .select('*')
-                    .eq('id', articleAuthor.author_id)
-                    .single();
-
-                if (authorError) return null;
-                return author;
-            } catch (error) {
-                return null;
-            }
+            const urlParams = new URLSearchParams(window.location.search)
+            const slug = urlParams.get('slug')
+            console.log('🔍 Slug desde URL:', slug)
+            console.log('📍 URL completa:', window.location.href)
+            return slug
         }
 
         async function loadArticle() {
-            const container = document.getElementById('article-container');
-            const slug = getSlugFromUrl();
+            const container = document.getElementById('article-container')
+            const slug = getSlugFromUrl()
+            
+            console.log('📝 Slug extraído:', slug)
 
             if (!slug) {
                 container.innerHTML = `
                     <div class="error-container">
                         <h2>❌ Artículo no especificado</h2>
                         <p>No se ha especificado qué artículo quieres ver.</p>
-                        <a href="/" class="nav-prev" style="justify-content: center;">← Volver al inicio</a>
+                        <p><small>URL: ${window.location.href}</small></p>
+                        <a href="/" class="read-more">← Volver al inicio</a>
                     </div>
-                `;
-                return;
+                `
+                return
             }
 
             try {
+                console.log('🔍 Buscando artículo con slug:', slug)
+                
                 const { data: article, error } = await supabase
                     .from('articles')
                     .select('*')
                     .eq('slug', slug)
                     .eq('is_published', true)
-                    .single();
+                    .single()
 
-                if (error || !article) {
-                    throw new Error('Artículo no encontrado');
+                if (error) {
+                    console.error('❌ Error de Supabase:', error)
+                    throw new Error('Artículo no encontrado en la base de datos')
                 }
 
-                const author = await getArticleAuthor(article.id);
+                if (!article) {
+                    throw new Error('Artículo no encontrado')
+                }
 
-                // Incrementar vistas (no await para no bloquear)
+                console.log('✅ Artículo encontrado:', article.title)
+
+                // Incrementar vistas (sin await para no bloquear)
                 supabase
                     .from('articles')
                     .update({ views_count: (article.views_count || 0) + 1 })
                     .eq('id', article.id)
-                    .then();
+                    .then()
 
+                // Formatear fecha
                 const publishDate = article.published_at ? new Date(article.published_at).toLocaleDateString('es-ES', {
+                    weekday: 'long',
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric'
-                }) : 'Fecha no disponible';
+                }) : 'Fecha no disponible'
 
-                function renderAuthorSection(author) {
-                    if (!author) return '';
-
-                    let instagramUsername = '';
-                    let instagramUrl = '';
-
-                    if (author.instagram_handle) {
-                        if (author.instagram_handle.includes('instagram.com')) {
-                            instagramUrl = author.instagram_handle;
-                            const matches = author.instagram_handle.match(/(?:instagram\.com\/)([^\/?#]+)/);
-                            instagramUsername = matches ? '@' + matches[1] : author.instagram_handle;
-                        } else {
-                            instagramUsername = author.instagram_handle.startsWith('@') ? author.instagram_handle : '@' + author.instagram_handle;
-                            instagramUrl = `https://instagram.com/${instagramUsername.replace('@', '')}`;
-                        }
-                    }
-
-                    const localAvatarUrl = '/src/logo.jpg';
-
-                    return `
-                        <div class="author-section">
-                            <h3>Sobre el autor</h3>
-                            <div class="author-container">
-                                <img src="${localAvatarUrl}" 
-                                     alt="${author.name}" 
-                                     class="author-avatar"
-                                     onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'64\' height=\'64\' viewBox=\'0 0 64 64\'%3E%3Ccircle cx=\'32\' cy=\'32\' r=\'32\' fill=\'%23${(author.name.charCodeAt(0) * 999999).toString(16).substring(0, 6)}\'/%3E%3Ctext x=\'32\' y=\'40\' font-size=\'24\' text-anchor=\'middle\' fill=\'%23ffffff\' font-family=\'Arial\'%3E${author.name.charAt(0)}%3C/text%3E%3C/svg%3E';">
-                                <div class="author-info">
-                                    <div class="author-name">${author.name}</div>
-                                    ${author.bio ? `<p class="author-bio">${author.bio}</p>` : ''}
-                                    ${instagramUsername ? `
-                                        <a href="${instagramUrl}" 
-                                           target="_blank" 
-                                           rel="noopener noreferrer"
-                                           class="author-instagram">
-                                            <span>📷</span>
-                                            ${instagramUsername}
-                                        </a>
-                                    ` : ''}
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }
-
+                // Renderizar artículo
                 container.innerHTML = `
                     <article>
                         <header class="article-header">
                             <h1>${article.title}</h1>
-                            ${article.subtitle ? `<p style="color: var(--text-secondary);">${article.subtitle}</p>` : ''}
+                            ${article.subtitle ? `<p style="color: var(--text-secondary); font-size: 1.2rem;">${article.subtitle}</p>` : ''}
                             
                             <div class="article-meta">
                                 <span>📅 ${publishDate}</span>
                                 <span>📁 ${article.category || 'general'}</span>
-                                ${article.reading_time ? `<span>⏱️ ${article.reading_time} min</span>` : ''}
-                                <span>👁️ ${article.views_count || 0}</span>
+                                ${article.reading_time ? `<span>⏱️ ${article.reading_time} min lectura</span>` : ''}
+                                <span>👁️ ${article.views_count || 0} vistas</span>
                             </div>
                         </header>
 
@@ -550,30 +353,32 @@
                                 </div>
                             ` : ''}
 
-                            ${renderAuthorSection(author)}
+                            <div class="article-navigation">
+                                <a href="/" class="nav-prev">← Volver al inicio</a>
+                                <a href="#" class="nav-next" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">↑ Arriba</a>
+                            </div>
                         </footer>
                     </article>
-                `;
+                `
 
-                document.title = `${article.title} - syscall`;
+                // Actualizar título de la página
+                document.title = `${article.title} - syscall`
 
             } catch (error) {
-                console.error('Error cargando artículo:', error);
+                console.error('❌ Error:', error)
                 container.innerHTML = `
                     <div class="error-container">
                         <h2>❌ Artículo no encontrado</h2>
-                        <p>El artículo que buscas no existe o ha sido eliminado.</p>
-                        <a href="/" class="nav-prev" style="justify-content: center;">← Volver al inicio</a>
+                        <p>El artículo con slug "${slug}" no existe o ha sido eliminado.</p>
+                        <p><small>Error: ${error.message}</small></p>
+                        <a href="/" class="read-more">← Volver al inicio</a>
                     </div>
-                `;
+                `
             }
         }
 
-        // Inicializar
-        document.addEventListener('DOMContentLoaded', () => {
-            initMobileMenu();
-            loadArticle();
-        });
+        // Cargar el artículo cuando la página esté lista
+        document.addEventListener('DOMContentLoaded', loadArticle)
     </script>
 </body>
 

@@ -1,6 +1,11 @@
 // js/supabase-client.js
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
+// Tus credenciales de Supabase
+const supabaseUrl = 'https://swsrywvjskhshlbtbzrx.supabase.co'
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN3c3J5d3Zqc2toc2hsYnRienJ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwMDcxMDksImV4cCI6MjA4ODU4MzEwOX0.u9JCI1eyR4yNdTGb9o17vHTDGZJDrO7W62KlkMATd1M'
+const supabase = createClient(supabaseUrl, supabaseKey)
+
 // ===== CONFIGURACIÓN DE YOUTUBE =====
 const YOUTUBE_CONFIG = {
     CHANNEL_ID: 'UCud7gxsaKCpU144Vvbk3zcg',
@@ -16,129 +21,51 @@ let youtubeCache = {
     timestamp: null
 }
 
-// Variable para almacenar el cliente de Supabase
-let supabase = null;
+// ===== FUNCIÓN PRINCIPAL =====
+document.addEventListener('DOMContentLoaded', async () => {
+    console.log('🚀 Iniciando syscall...')
 
-// Función para esperar la configuración
-function waitForConfig() {
-    return new Promise((resolve, reject) => {
-        if (window.SUPABASE_CONFIG) {
-            resolve(window.SUPABASE_CONFIG);
-        } else {
-            console.log('⏳ Esperando configuración de Supabase...');
-            const checkInterval = setInterval(() => {
-                if (window.SUPABASE_CONFIG) {
-                    clearInterval(checkInterval);
-                    resolve(window.SUPABASE_CONFIG);
-                }
-            }, 50);
-            
-            // Timeout después de 5 segundos
-            setTimeout(() => {
-                clearInterval(checkInterval);
-                reject(new Error('⏰ Timeout: No se recibió configuración de Supabase'));
-            }, 5000);
-        }
-    });
-}
-
-// Inicializar Supabase cuando la configuración esté lista
-waitForConfig().then(config => {
-    console.log('✅ Configuración encontrada, inicializando Supabase');
-    console.log('📊 URL:', config.url);
-    console.log('📊 Key length:', config.anonKey?.length || 0);
-    
-    const supabaseUrl = config.url;
-    const supabaseKey = config.anonKey;
-    supabase = createClient(supabaseUrl, supabaseKey);
-    
-    console.log('✅ Cliente de Supabase inicializado correctamente');
-    
-    // Inicializar la aplicación
-    initializeApp();
-    
-}).catch(error => {
-    console.error('❌ Error fatal:', error);
-    
-    // Mostrar error en la UI
-    const container = document.getElementById('articles-grid-container');
-    if (container) {
-        container.innerHTML = `
-            <div style="text-align: center; padding: 2rem; color: #ef4444;">
-                <h3>Error de configuración</h3>
-                <p>No se pudo conectar con la base de datos.</p>
-                <p style="font-size: 0.8rem; color: #666;">${error.message}</p>
-            </div>
-        `;
-    }
-    
-    // Ocultar loaders
-    hideLoaders();
-});
-
-// ===== FUNCIÓN PRINCIPAL DE INICIALIZACIÓN =====
-function initializeApp() {
-    console.log('🚀 Iniciando syscall...');
-    
-    // Verificar que supabase esté inicializado
-    if (!supabase) {
-        console.error('❌ Supabase no está inicializado');
-        return;
-    }
-    
-    // Si el DOM ya está cargado, ejecutar inmediatamente
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            executeApp();
-        });
-    } else {
-        executeApp();
-    }
-}
-
-async function executeApp() {
     try {
         // Mostrar loaders
-        showLoaders();
+        showLoaders()
 
         // Cargar todos los datos
         await Promise.allSettled([
             loadArticles(),
             loadLatestVideo()
-        ]);
+        ])
 
         // Inicializar componentes
-        initMobileMenu();
-        initSearch();
-        updateWeeklySyscall();
+        initMobileMenu()
+        initSearch()
+        updateWeeklySyscall()
 
-        console.log('✅ Todos los contenidos cargados correctamente');
-        setTimeout(hideLoaders, 1000);
+        console.log('✅ Todos los contenidos cargados correctamente')
+        setTimeout(hideLoaders, 1000)
 
     } catch (error) {
-        console.error('❌ Error general:', error);
-        hideLoaders();
+        console.error('❌ Error general:', error)
     }
-}
+})
 
 // ===== FUNCIONES AUXILIARES =====
 function showLoaders() {
     document.querySelectorAll('.loader').forEach(loader => {
-        if (loader) loader.style.display = 'block';
-    });
+        if (loader) loader.style.display = 'block'
+    })
 }
 
 function hideLoaders() {
     document.querySelectorAll('.loader').forEach(loader => {
-        if (loader) loader.style.display = 'none';
-    });
+        if (loader) loader.style.display = 'none'
+    })
 }
 
 function cleanHtml(html) {
-    if (!html) return '';
-    const temp = document.createElement('div');
-    temp.innerHTML = html;
-    return temp.textContent || temp.innerText || '';
+    if (!html) return ''
+    const temp = document.createElement('div')
+    temp.innerHTML = html
+    return temp.textContent || temp.innerText || ''
 }
 
 // ===== MENÚ HAMBURGUESA =====
@@ -178,26 +105,26 @@ function initMobileMenu() {
 // ===== CARGAR GRID DE ARTÍCULOS =====
 async function loadArticles() {
     try {
-        console.log('🔍 Cargando artículos del grid...');
+        console.log('🔍 Cargando artículos del grid...')
 
-        const container = document.getElementById('articles-grid-container');
-        if (!container) return;
+        const container = document.getElementById('articles-grid-container')
+        if (!container) return
 
         const { data: articles, error } = await supabase
             .from('articles')
             .select('*')
             .eq('is_published', true)
             .order('published_at', { ascending: false })
-            .limit(6);
+            .limit(6)
 
-        if (error) throw error;
+        if (error) throw error
 
         if (!articles || articles.length === 0) {
-            container.innerHTML = '<div class="no-articles">No hay artículos publicados aún</div>';
-            return;
+            container.innerHTML = '<div class="no-articles">No hay artículos publicados aún</div>'
+            return
         }
 
-        console.log(`✅ Cargados ${articles.length} artículos`);
+        console.log(`✅ Cargados ${articles.length} artículos`)
 
         container.innerHTML = articles.map(article => {
             const date = article.published_at
@@ -206,16 +133,16 @@ async function loadArticles() {
                     month: 'short',
                     year: 'numeric'
                 })
-                : 'Fecha no disponible';
+                : 'Fecha no disponible'
 
-            let excerpt = article.excerpt || article.subtitle;
+            let excerpt = article.excerpt || article.subtitle
             if (!excerpt && article.content) {
-                excerpt = cleanHtml(article.content).substring(0, 120) + '...';
+                excerpt = cleanHtml(article.content).substring(0, 120) + '...'
             }
 
-            const categoryIcon = getCategoryIcon(article.category);
+            const categoryIcon = getCategoryIcon(article.category)
 
-            const defaultImage = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 24 24' fill='%233b82f6'%3E%3Cpath d='M4 6H20M4 12H20M4 18H20' stroke='%233b82f6' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E`;
+            const defaultImage = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 24 24' fill='%233b82f6'%3E%3Cpath d='M4 6H20M4 12H20M4 18H20' stroke='%233b82f6' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E`
 
             return `
                 <article class="article-card">
@@ -241,14 +168,14 @@ async function loadArticles() {
                         </div>
                     </div>
                 </article>
-            `;
-        }).join('');
+            `
+        }).join('')
 
     } catch (error) {
-        console.error('❌ Error en loadArticles:', error);
-        const container = document.getElementById('articles-grid-container');
+        console.error('❌ Error en loadArticles:', error)
+        const container = document.getElementById('articles-grid-container')
         if (container) {
-            container.innerHTML = '<div class="no-articles" style="color: #ef4444;">Error al cargar los artículos</div>';
+            container.innerHTML = '<div class="no-articles" style="color: #ef4444;">Error al cargar los artículos</div>'
         }
     }
 }
@@ -266,31 +193,31 @@ function getCategoryIcon(category) {
         'tutoriales': '📝',
         'noticias': '📡',
         'video': '🎬'
-    };
-    return icons[category?.toLowerCase()] || '📄';
+    }
+    return icons[category?.toLowerCase()] || '📄'
 }
 
 // ===== CARGAR ÚLTIMO VIDEO =====
 async function loadLatestVideo() {
     try {
-        const container = document.getElementById('latest-video-container');
-        if (!container) return;
+        const container = document.getElementById('latest-video-container')
+        if (!container) return
 
-        container.innerHTML = '<div class="loader" role="status"></div>';
+        container.innerHTML = '<div class="loader" role="status"></div>'
 
         // Usar RSS feed
-        const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://www.youtube.com/feeds/videos.xml?channel_id=${YOUTUBE_CONFIG.CHANNEL_ID}`);
+        const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://www.youtube.com/feeds/videos.xml?channel_id=${YOUTUBE_CONFIG.CHANNEL_ID}`)
         
-        if (!response.ok) throw new Error('Error en RSS');
+        if (!response.ok) throw new Error('Error en RSS')
         
-        const data = await response.json();
+        const data = await response.json()
         
         if (data.items && data.items.length > 0) {
-            const latestVideo = data.items[0];
+            const latestVideo = data.items[0]
             
-            let videoId = '';
+            let videoId = ''
             if (latestVideo.link && latestVideo.link.includes('v=')) {
-                videoId = latestVideo.link.split('v=')[1].split('&')[0];
+                videoId = latestVideo.link.split('v=')[1].split('&')[0]
             }
             
             if (videoId) {
@@ -302,23 +229,23 @@ async function loadLatestVideo() {
                         month: 'long',
                         day: 'numeric'
                     })
-                };
+                }
                 
-                renderVideoEmbed(videoData, container);
-                return;
+                renderVideoEmbed(videoData, container)
+                return
             }
         }
         
-        renderVideoPlaceholder(container);
+        renderVideoPlaceholder(container)
 
     } catch (error) {
-        console.error('Error cargando video:', error);
-        renderVideoPlaceholder(document.getElementById('latest-video-container'));
+        console.error('Error cargando video:', error)
+        renderVideoPlaceholder(document.getElementById('latest-video-container'))
     }
 }
 
 function renderVideoEmbed(video, container) {
-    const embedUrl = `https://www.youtube.com/embed/${video.videoId}?rel=0&modestbranding=1&iv_load_policy=3&color=white&autohide=1&controls=1&playsinline=1`;
+    const embedUrl = `https://www.youtube.com/embed/${video.videoId}?rel=0&modestbranding=1&iv_load_policy=3&color=white&autohide=1&controls=1&playsinline=1`
 
     container.innerHTML = `
         <div class="video-embed-wrapper">
@@ -344,7 +271,7 @@ function renderVideoEmbed(video, container) {
                 </div>
             </div>
         </div>
-    `;
+    `
 }
 
 function renderVideoPlaceholder(container) {
@@ -364,7 +291,7 @@ function renderVideoPlaceholder(container) {
                 </a>
             </div>
         </div>
-    `;
+    `
 }
 
 // ===== BARRA DE BÚSQUEDA =====
@@ -582,9 +509,9 @@ export async function loadSingleArticle(slug) {
             .select('*')
             .eq('slug', slug)
             .eq('is_published', true)
-            .single();
+            .single()
 
-        if (error) return null;
+        if (error) return null
 
         if (data) {
             supabase
@@ -592,18 +519,18 @@ export async function loadSingleArticle(slug) {
                 .update({ views_count: (data.views_count || 0) + 1 })
                 .eq('id', data.id)
                 .then()
-                .catch(() => {});
+                .catch(() => {})
         }
 
-        return data;
+        return data
     } catch (error) {
-        return null;
+        return null
     }
 }
 
 export async function searchArticles(query) {
     try {
-        if (!query || query.length < 2) return [];
+        if (!query || query.length < 2) return []
 
         const { data, error } = await supabase
             .from('articles')
@@ -611,11 +538,11 @@ export async function searchArticles(query) {
             .eq('is_published', true)
             .ilike('title', `%${query}%`)
             .order('published_at', { ascending: false })
-            .limit(10);
+            .limit(10)
 
-        return data || [];
+        return data || []
     } catch (error) {
-        return [];
+        return []
     }
 }
 
@@ -627,11 +554,11 @@ export async function loadArticlesByCategory(category, limit = 10) {
             .eq('is_published', true)
             .eq('category', category)
             .order('published_at', { ascending: false })
-            .limit(limit);
+            .limit(limit)
 
-        return data || [];
+        return data || []
     } catch (error) {
-        return [];
+        return []
     }
 }
 
@@ -641,19 +568,19 @@ export async function loadRelatedArticles(articleId, category, tags = [], limit 
             .from('articles')
             .select('*')
             .eq('is_published', true)
-            .neq('id', articleId);
+            .neq('id', articleId)
 
-        if (category) query = query.eq('category', category);
-        if (tags && tags.length > 0) query = query.overlaps('tags', tags);
+        if (category) query = query.eq('category', category)
+        if (tags && tags.length > 0) query = query.overlaps('tags', tags)
 
         const { data, error } = await query
             .order('published_at', { ascending: false })
-            .limit(limit);
+            .limit(limit)
 
-        return data || [];
+        return data || []
     } catch (error) {
-        return [];
+        return []
     }
 }
 
-console.log('✅ Script de Supabase cargado, esperando configuración...');
+console.log('✅ Cliente de Supabase inicializado correctamente')
