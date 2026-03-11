@@ -1,23 +1,148 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Página no encontrada</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 50px;
-    }
-    a {
-      color: #0070f3;
-      text-decoration: none;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>404 · syscall()</title>
+
+<link rel="stylesheet" href="/css/style.css">
+<link rel="shortcut icon" href="/src/logo.jpg" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+
+.error-container{
+max-width:800px;
+margin:auto;
+padding:4rem 1.5rem;
+text-align:center;
+}
+
+.error-code{
+font-family:var(--font-mono);
+font-size:6rem;
+font-weight:700;
+color:var(--blue-primary);
+margin-bottom:1rem;
+}
+
+.error-title{
+font-family:var(--font-mono);
+font-size:1.8rem;
+margin-bottom:1rem;
+}
+
+.error-text{
+color:var(--text-secondary);
+margin-bottom:2rem;
+}
+
+.terminal-box{
+background:var(--bg-tertiary);
+border:1px solid var(--border-default);
+border-radius:16px;
+padding:1.5rem;
+text-align:left;
+font-family:var(--font-mono);
+color:var(--text-secondary);
+margin-bottom:2rem;
+box-shadow:var(--shadow-md);
+}
+
+.terminal-line{
+margin-bottom:0.4rem;
+}
+
+.prompt{
+color:var(--blue-primary);
+}
+
+.return-home{
+display:inline-block;
+padding:0.6rem 1.4rem;
+border-radius:30px;
+background:var(--blue-primary);
+color:white;
+text-decoration:none;
+font-family:var(--font-mono);
+transition:all 0.2s ease;
+}
+
+.return-home:hover{
+background:var(--blue-secondary);
+transform:translateY(-2px);
+}
+
+</style>
+
 </head>
+
 <body>
-  <h1>404</h1>
-  <p>Esta página no existe.</p>
-  <a href="/">Volver al inicio</a>
+
+<header class="header">
+<div class="header-container">
+
+<a href="/" class="logo">
+syscall<span class="logo-accent">();</span>
+</a>
+
+</div>
+</header>
+
+<main>
+
+<section class="error-container">
+
+<div class="error-code">404</div>
+
+<h1 class="error-title">segmentation fault</h1>
+
+<p class="error-text">
+La página que buscas no existe o fue movida.
+</p>
+
+<div class="terminal-box">
+
+<div class="terminal-line"><span class="prompt">$</span> request /page</div>
+<div class="terminal-line">error: resource_not_found</div>
+<div class="terminal-line">status: 404</div>
+<div class="terminal-line">syscall(): abort()</div>
+
+</div>
+
+<a href="/" class="return-home">
+volver al inicio →
+</a>
+
+</section>
+
+</main>
+
+<footer class="footer">
+
+<div class="footer-bottom">
+<p>
+
+<span>syscall</span>
+
+<span class="separator">·</span>
+
+<span>informática clara y directa</span>
+
+<span class="separator">·</span>
+
+<span class="footer-exit">exit(1);</span>
+
+</p>
+</div>
+
+</footer>
+
 </body>
+
 </html>
