@@ -143,18 +143,23 @@
         </div>
     </footer>
 
+    <!-- Configuración de Supabase -->
     <script>
-        // Configuración de Supabase desde variables de entorno de Netlify
         window.SUPABASE_CONFIG = {
-            url: 'https://swsrywvjskhshlbtbzrx.supabase.co',  // URL fija (no es secreta)
+            url: 'https://swsrywvjskhshlbtbzrx.supabase.co',
             anonKey: (function () {
-                // Intentar diferentes formas de obtener la variable
-                return window.SUPABASE_ANON_KEY ||
-                    process?.env?.SUPABASE_ANON_KEY ||
-                    '{{ SUPABASE_ANON_KEY }}';
+                // Para Netlify
+                if (typeof netlify !== 'undefined' && netlify.env) {
+                    return netlify.env.SUPABASE_ANON_KEY;
+                }
+                // Para desarrollo local o fallback
+                return '{{ SUPABASE_ANON_KEY }}'.replace(/[{}]/g, '');
             })()
         };
+        console.log('✅ Configuración cargada:', window.SUPABASE_CONFIG.url ? 'URL ok' : 'URL error');
     </script>
+
+    <!-- Script principal -->
     <script type="module" src="js/supabase-client.js"></script>
 </body>
 

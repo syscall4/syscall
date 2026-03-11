@@ -103,7 +103,7 @@
             font-style: italic;
         }
 
-        /* ===== FOOTER DEL ARTÍCULO - DISEÑO PROFESIONAL ===== */
+        /* ===== FOOTER DEL ARTÍCULO ===== */
         .article-footer {
             display: flex;
             flex-direction: column;
@@ -112,7 +112,6 @@
             border-top: 1px solid var(--border-color);
         }
 
-        /* Tags */
         .article-tags {
             display: flex;
             gap: 0.5rem;
@@ -136,7 +135,6 @@
             color: var(--accent-primary);
         }
 
-        /* Autor - Diseño minimalista */
         .author-section {
             margin-bottom: 3rem;
             padding: 2rem;
@@ -199,7 +197,6 @@
             color: var(--accent-primary);
         }
 
-        /* Navegación - Diseño limpio */
         .article-navigation {
             display: flex;
             justify-content: space-between;
@@ -220,26 +217,11 @@
             gap: 0.5rem;
         }
 
-        .nav-prev {
-            padding-right: 1rem;
-        }
-
-        .nav-next {
-            padding-left: 1rem;
-        }
-
         .nav-prev:hover,
         .nav-next:hover {
             color: var(--accent-primary);
         }
 
-        .nav-prev span,
-        .nav-next span {
-            font-size: 1.2rem;
-            line-height: 1;
-        }
-
-        /* Error container */
         .error-container {
             text-align: center;
             padding: 4rem 2rem;
@@ -249,11 +231,6 @@
             font-size: 2rem;
             color: #ef4444;
             margin-bottom: 1rem;
-        }
-
-        .error-container p {
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
         }
 
         .video-container {
@@ -273,36 +250,21 @@
             height: 100%;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .article-page {
                 padding: 1rem;
             }
-
             .article-header h1 {
                 font-size: 2rem;
             }
-
             .article-meta {
                 gap: 1rem;
                 font-size: 0.9rem;
             }
-
             .author-container {
                 flex-direction: column;
                 align-items: center;
                 text-align: center;
-            }
-
-            .article-navigation {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-            }
-
-            .nav-prev,
-            .nav-next {
-                padding: 0.5rem 0;
             }
         }
     </style>
@@ -366,24 +328,47 @@
         </div>
     </footer>
 
+    <!-- Configuración de Supabase -->
     <script>
-        // Configuración de Supabase desde variables de entorno de Netlify
         window.SUPABASE_CONFIG = {
-            url: 'https://swsrywvjskhshlbtbzrx.supabase.co',  // URL fija (no es secreta)
-            anonKey: (function () {
-                // Intentar diferentes formas de obtener la variable
-                return window.SUPABASE_ANON_KEY ||
-                    process?.env?.SUPABASE_ANON_KEY ||
-                    '{{ SUPABASE_ANON_KEY }}';
+            url: 'https://swsrywvjskhshlbtbzrx.supabase.co',
+            anonKey: (function() {
+                // Para Netlify
+                if (typeof netlify !== 'undefined' && netlify.env) {
+                    return netlify.env.SUPABASE_ANON_KEY;
+                }
+                // Para desarrollo local o fallback
+                return '{{ SUPABASE_ANON_KEY }}'.replace(/[{}]/g, '');
             })()
         };
+        console.log('✅ Configuración cargada en post.html');
     </script>
-    <script type="module" src="js/supabase-client.js"></script>
 
+    <!-- Script único para post.html -->
     <script type="module">
+        // ===== IMPORTAR SUPABASE =====
         import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+        
+        // Verificar configuración
+        if (!window.SUPABASE_CONFIG || !window.SUPABASE_CONFIG.url || !window.SUPABASE_CONFIG.anonKey) {
+            console.error('❌ Error: Configuración de Supabase incompleta');
+            document.getElementById('article-container').innerHTML = `
+                <div class="error-container">
+                    <h2>❌ Error de configuración</h2>
+                    <p>No se pudo conectar con la base de datos.</p>
+                    <a href="/" class="nav-prev" style="justify-content: center;">← Volver al inicio</a>
+                </div>
+            `;
+            throw new Error('Configuración de Supabase no encontrada');
+        }
 
-        // Inicializar menú hamburguesa
+        // Inicializar cliente de Supabase
+        const supabaseUrl = window.SUPABASE_CONFIG.url;
+        const supabaseKey = window.SUPABASE_CONFIG.anonKey;
+        const supabase = createClient(supabaseUrl, supabaseKey);
+        console.log('✅ Cliente de Supabase inicializado');
+
+        // ===== FUNCIONES =====
         function initMobileMenu() {
             const menuToggle = document.querySelector('.menu-toggle');
             const navList = document.querySelector('.nav-list');
@@ -417,41 +402,37 @@
             }
         }
 
-        // Obtener el slug de la URL
         function getSlugFromUrl() {
-            const urlParams = new URLSearchParams(window.location.search)
-            const slug = urlParams.get('slug')
-            return slug
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('slug');
         }
 
-        // Función para obtener el autor del artículo
         async function getArticleAuthor(articleId) {
             try {
                 const { data: articleAuthor, error: relationError } = await supabase
                     .from('article_authors')
                     .select('author_id')
                     .eq('article_id', articleId)
-                    .maybeSingle()
+                    .maybeSingle();
 
-                if (relationError || !articleAuthor) return null
+                if (relationError || !articleAuthor) return null;
 
                 const { data: author, error: authorError } = await supabase
                     .from('authors')
                     .select('*')
                     .eq('id', articleAuthor.author_id)
-                    .single()
+                    .single();
 
-                if (authorError) return null
-
-                return author
+                if (authorError) return null;
+                return author;
             } catch (error) {
-                return null
+                return null;
             }
         }
 
         async function loadArticle() {
-            const container = document.getElementById('article-container')
-            const slug = getSlugFromUrl()
+            const container = document.getElementById('article-container');
+            const slug = getSlugFromUrl();
 
             if (!slug) {
                 container.innerHTML = `
@@ -460,8 +441,8 @@
                         <p>No se ha especificado qué artículo quieres ver.</p>
                         <a href="/" class="nav-prev" style="justify-content: center;">← Volver al inicio</a>
                     </div>
-                `
-                return
+                `;
+                return;
             }
 
             try {
@@ -470,31 +451,30 @@
                     .select('*')
                     .eq('slug', slug)
                     .eq('is_published', true)
-                    .single()
+                    .single();
 
                 if (error || !article) {
-                    throw new Error('Artículo no encontrado')
+                    throw new Error('Artículo no encontrado');
                 }
 
-                const author = await getArticleAuthor(article.id)
+                const author = await getArticleAuthor(article.id);
 
-                // Incrementar vistas
+                // Incrementar vistas (no await para no bloquear)
                 supabase
                     .from('articles')
                     .update({ views_count: (article.views_count || 0) + 1 })
                     .eq('id', article.id)
-                    .then()
+                    .then();
 
                 const publishDate = article.published_at ? new Date(article.published_at).toLocaleDateString('es-ES', {
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric'
-                }) : 'Fecha no disponible'
+                }) : 'Fecha no disponible';
 
                 function renderAuthorSection(author) {
                     if (!author) return '';
 
-                    // Extraer el nombre de usuario de Instagram
                     let instagramUsername = '';
                     let instagramUrl = '';
 
@@ -509,8 +489,7 @@
                         }
                     }
 
-                    // Usar imagen local en lugar de la URL de la base de datos
-                    const localAvatarUrl = '/src/logo.jpg'; // Ajusta esta ruta según donde guardes la imagen
+                    const localAvatarUrl = '/src/logo.jpg';
 
                     return `
                         <div class="author-section">
@@ -579,25 +558,27 @@
                             ${renderAuthorSection(author)}
                         </footer>
                     </article>
-                `
+                `;
 
-                document.title = `${article.title} - syscall`
+                document.title = `${article.title} - syscall`;
 
             } catch (error) {
+                console.error('Error cargando artículo:', error);
                 container.innerHTML = `
                     <div class="error-container">
                         <h2>❌ Artículo no encontrado</h2>
-                        <p>El artículo no existe o ha sido eliminado.</p>
+                        <p>El artículo que buscas no existe o ha sido eliminado.</p>
                         <a href="/" class="nav-prev" style="justify-content: center;">← Volver al inicio</a>
                     </div>
-                `
+                `;
             }
         }
 
+        // Inicializar
         document.addEventListener('DOMContentLoaded', () => {
-            initMobileMenu()
-            loadArticle()
-        })
+            initMobileMenu();
+            loadArticle();
+        });
     </script>
 </body>
 
