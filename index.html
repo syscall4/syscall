@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>syscall · informática clara y directa</title>
+    <meta name="description"
+        content="Seguridad, actualidad, hardware y conceptos. Todo sobre informática, explicado de forma sencilla y sin rodeos.">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/src/logo.jpg" type="image/x-icon">
+    <link rel="shortcut icon" href="src/logo.jpg" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-container">
+            <a href="/" class="logo">
+                syscall<span class="logo-accent">();</span>
+            </a>
+
+            <nav class="nav">
+                <button class="menu-toggle" aria-label="Menú" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <ul class="nav-list">
+                    <li><a href="https://youtube.com/@syscall.sc4" target="_blank" rel="noopener noreferrer"
+                            class="nav-link">/youtube</a></li>
+                    <li><a href="https://instagram.com/_syscall_" target="_blank" rel="noopener noreferrer"
+                            class="nav-link">/instagram</a></li>
+                    <li><a href="https://tiktok.com/@syscall" target="_blank" rel="noopener noreferrer"
+                            class="nav-link">/tiktok</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-container">
+                <span class="hero-tag">informática clara y directa</span>
+                <h1 class="hero-title">
+                    syscall<span class="hero-accent">();</span>
+                </h1>
+                <p class="hero-description">
+                    Seguridad, actualidad, hardware y conceptos. Todo sobre informática,
+                    explicado de forma sencilla y sin rodeos.
+                </p>
+            </div>
+        </section>
+
+        <!-- Barra de búsqueda -->
+        <section class="search-section">
+            <div class="search-container">
+                <div class="search-wrapper" id="search-wrapper">
+                    <input type="text" id="search-input" class="search-input"
+                        placeholder="Buscar artículos, vídeos, tutoriales..." autocomplete="off">
+                    <button class="search-button" id="search-button">
+                        <span class="search-icon">🔍</span>
+                    </button>
+                    <div class="search-results" id="search-results"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Syscall de la semana -->
+        <div class="weekly-syscall"></div>
+
+        <div class="container">
+            <div class="content-wrapper">
+                <!-- Sección de artículos -->
+                <section class="articles">
+                    <div class="section-header">
+                        <h2 class="section-title">últimos artículos</h2>
+                    </div>
+                    <div class="articles-grid" id="articles-grid-container">
+                        <div class="loader" role="status" aria-label="Cargando artículos"></div>
+                    </div>
+                </section>
+
+                <!-- Sección de último video -->
+                <section class="latest-video">
+                    <div class="section-header">
+                        <h2 class="section-title">último video</h2>
+                    </div>
+
+                    <div class="video-embed-wrapper">
+                        <div class="embed-container">
+                            <iframe
+                                src="https://www.youtube.com/embed?list=UUud7gxsaKCpU144Vvbk3zcg&index=1&rel=0&modestbranding=1"
+                                title="Último video de syscall" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen loading="lazy">
+                            </iframe>
+                        </div>
+                        <div class="video-info-bar">
+                            <div class="video-title">
+                                <h3>Asi es el nuevo Macbook Neo</h3>
+                            </div>
+                            <a href="https://youtube.com/@syscall.sc4" target="_blank" class="video-button small">
+                                Ver en YouTube →
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-info">
+                <div class="footer-logo">syscall<span class="logo-accent">();</span></div>
+                <span class="footer-text">informática clara y directa</span>
+            </div>
+
+            <div class="footer-links">
+                <a href="https://youtube.com/@syscall.sc4" target="_blank" rel="noopener noreferrer"
+                    class="footer-link">youtube</a>
+                <a href="https://instagram.com/_syscall_" target="_blank" rel="noopener noreferrer"
+                    class="footer-link">instagram</a>
+                <a href="https://tiktok.com/@syscall" target="_blank" rel="noopener noreferrer"
+                    class="footer-link">tiktok</a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>
+                <span>© 2026 syscall</span>
+                <span class="separator">·</span>
+                <span>informática clara y directa</span>
+                <span class="separator">·</span>
+                <span class="footer-exit">exit(0);</span>
+            </p>
+        </div>
+    </footer>
+
+    <script src="/config.js"></script>
+    <script type="module" src="/js/supabase-client.js"></script>
+</body>
+
+</html>

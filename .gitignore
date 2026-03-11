@@ -1,0 +1,6 @@
+# .gitignore
+config.js
+/admin/
+.DS_Store
+node_modules/
+dist/
