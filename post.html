@@ -328,20 +328,15 @@
         </div>
     </footer>
 
-    <!-- Configuración de Supabase -->
+    <!-- CONFIGURACIÓN DIRECTA CON CLAVE CORRECTA -->
     <script>
         window.SUPABASE_CONFIG = {
             url: 'https://swsrywvjskhshlbtbzrx.supabase.co',
-            anonKey: (function() {
-                // Para Netlify
-                if (typeof netlify !== 'undefined' && netlify.env) {
-                    return netlify.env.SUPABASE_ANON_KEY;
-                }
-                // Para desarrollo local o fallback
-                return '{{ SUPABASE_ANON_KEY }}'.replace(/[{}]/g, '');
-            })()
+            anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN3c3J5d3Zqc2toc2hsYnRienJ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwMDcxMDksImV4cCI6MjA4ODU4MzEwOX0.u9JCI1eyR4yNdTGb9o17vHTDGZJDrO7W62KlkMATd1M'
         };
-        console.log('✅ Configuración cargada en post.html');
+        console.log('✅ Configuración cargada en post.html:');
+        console.log('URL:', window.SUPABASE_CONFIG.url);
+        console.log('KEY length:', window.SUPABASE_CONFIG.anonKey.length);
     </script>
 
     <!-- Script único para post.html -->

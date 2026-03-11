@@ -143,36 +143,15 @@
         </div>
     </footer>
 
+    <!-- CONFIGURACIÓN DIRECTA CON CLAVE CORRECTA -->
     <script>
-        // Cargar configuración desde Netlify Function
-        async function loadConfig() {
-            try {
-                const response = await fetch('/.netlify/functions/config');
-                const config = await response.json();
-
-                window.SUPABASE_CONFIG = {
-                    url: config.url,
-                    anonKey: config.anonKey
-                };
-
-                console.log('✅ Configuración cargada desde Netlify Function');
-                console.log('Key length:', window.SUPABASE_CONFIG.anonKey?.length);
-
-                // Inicializar la app después de tener la configuración
-                initializeApp();
-            } catch (error) {
-                console.error('❌ Error cargando configuración:', error);
-                document.getElementById('articles-grid-container').innerHTML = `
-                <div style="text-align: center; padding: 2rem; color: #ef4444;">
-                    <h3>Error de conexión</h3>
-                    <p>No se pudo cargar la configuración</p>
-                </div>
-            `;
-            }
-        }
-
-        // Iniciar carga
-        loadConfig();
+        window.SUPABASE_CONFIG = {
+            url: 'https://swsrywvjskhshlbtbzrx.supabase.co',
+            anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN3c3J5d3Zqc2toc2hsYnRienJ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwMDcxMDksImV4cCI6MjA4ODU4MzEwOX0.u9JCI1eyR4yNdTGb9o17vHTDGZJDrO7W62KlkMATd1M'
+        };
+        console.log('✅ Configuración cargada:');
+        console.log('URL:', window.SUPABASE_CONFIG.url);
+        console.log('KEY length:', window.SUPABASE_CONFIG.anonKey.length);
     </script>
 
     <!-- Script principal -->
