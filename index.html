@@ -144,9 +144,15 @@
     </footer>
 
     <script>
+        // Configuración de Supabase desde variables de entorno de Netlify
         window.SUPABASE_CONFIG = {
-            url: '{{ SUPABASE_URL }}',
-            anonKey: '{{ SUPABASE_ANON_KEY }}'
+            url: 'https://swsrywvjskhshlbtbzrx.supabase.co',  // URL fija (no es secreta)
+            anonKey: (function () {
+                // Intentar diferentes formas de obtener la variable
+                return window.SUPABASE_ANON_KEY ||
+                    process?.env?.SUPABASE_ANON_KEY ||
+                    '{{ SUPABASE_ANON_KEY }}';
+            })()
         };
     </script>
     <script type="module" src="js/supabase-client.js"></script>
