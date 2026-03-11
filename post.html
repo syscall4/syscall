@@ -8,6 +8,116 @@
     <link rel="stylesheet" href="/css/style.css">
     <style>
         /* Estilos adicionales para la página de artículo */
+        /* ===== HEADER ===== */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: rgba(10, 12, 16, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--sp-3) var(--sp-5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-mono);
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            transition: transform var(--transition);
+        }
+
+        .logo-accent {
+            color: var(--blue-primary);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: var(--sp-6);
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: var(--sp-1) 0;
+            transition: color var(--transition);
+            position: relative;
+        }
+
+        .nav-link::before {
+            content: '#';
+            opacity: 0.5;
+            margin-right: 2px;
+            color: var(--blue-primary);
+        }
+
+        .nav-link:hover {
+            color: var(--blue-primary);
+        }
+
+        .nav-link.active {
+            color: var(--blue-primary);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--blue-primary);
+            border-radius: 2px;
+        }
+
+        /* ===== MENÚ HAMBURGUESA ===== */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: var(--sp-2);
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background-color: var(--text-primary);
+            margin: 5px 0;
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
         .article-page {
             max-width: 800px;
             margin: 0 auto;
@@ -507,7 +617,7 @@
                                 <img src="${localAvatarUrl}" 
                                      alt="${author.name}" 
                                      class="author-avatar"
-                                     onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'64\' height=\'64\' viewBox=\'0 0 64 64\'%3E%3Ccircle cx=\'32\' cy=\'32\' r=\'32\' fill=\'%23${(author.name.charCodeAt(0) * 999999).toString(16).substring(0,6)}\'/%3E%3Ctext x=\'32\' y=\'40\' font-size=\'24\' text-anchor=\'middle\' fill=\'%23ffffff\' font-family=\'Arial\'%3E${author.name.charAt(0)}%3C/text%3E%3C/svg%3E';">
+                                     onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'64\' height=\'64\' viewBox=\'0 0 64 64\'%3E%3Ccircle cx=\'32\' cy=\'32\' r=\'32\' fill=\'%23${(author.name.charCodeAt(0) * 999999).toString(16).substring(0, 6)}\'/%3E%3Ctext x=\'32\' y=\'40\' font-size=\'24\' text-anchor=\'middle\' fill=\'%23ffffff\' font-family=\'Arial\'%3E${author.name.charAt(0)}%3C/text%3E%3C/svg%3E';">
                                 <div class="author-info">
                                     <div class="author-name">${author.name}</div>
                                     ${author.bio ? `<p class="author-bio">${author.bio}</p>` : ''}
