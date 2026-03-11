@@ -143,20 +143,36 @@
         </div>
     </footer>
 
-    <!-- Configuración de Supabase -->
     <script>
-        window.SUPABASE_CONFIG = {
-            url: 'https://swsrywvjskhshlbtbzrx.supabase.co',
-            anonKey: (function () {
-                // Para Netlify
-                if (typeof netlify !== 'undefined' && netlify.env) {
-                    return netlify.env.SUPABASE_ANON_KEY;
-                }
-                // Para desarrollo local o fallback
-                return '{{ SUPABASE_ANON_KEY }}'.replace(/[{}]/g, '');
-            })()
-        };
-        console.log('✅ Configuración cargada:', window.SUPABASE_CONFIG.url ? 'URL ok' : 'URL error');
+        // Cargar configuración desde Netlify Function
+        async function loadConfig() {
+            try {
+                const response = await fetch('/.netlify/functions/config');
+                const config = await response.json();
+
+                window.SUPABASE_CONFIG = {
+                    url: config.url,
+                    anonKey: config.anonKey
+                };
+
+                console.log('✅ Configuración cargada desde Netlify Function');
+                console.log('Key length:', window.SUPABASE_CONFIG.anonKey?.length);
+
+                // Inicializar la app después de tener la configuración
+                initializeApp();
+            } catch (error) {
+                console.error('❌ Error cargando configuración:', error);
+                document.getElementById('articles-grid-container').innerHTML = `
+                <div style="text-align: center; padding: 2rem; color: #ef4444;">
+                    <h3>Error de conexión</h3>
+                    <p>No se pudo cargar la configuración</p>
+                </div>
+            `;
+            }
+        }
+
+        // Iniciar carga
+        loadConfig();
     </script>
 
     <!-- Script principal -->

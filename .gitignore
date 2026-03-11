@@ -1,6 +1,6 @@
 # .gitignore
-config.js
 /admin/
+.env
 .DS_Store
 node_modules/
 dist/
